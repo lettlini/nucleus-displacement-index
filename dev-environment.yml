@@ -1,0 +1,12 @@
+name: nusdi-dev
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - tqdm
+    - numpy<2
+    - matplotlib
+    - opencv-python
+    - shapely
