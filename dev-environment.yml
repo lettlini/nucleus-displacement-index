@@ -10,3 +10,5 @@ dependencies:
     - matplotlib
     - opencv-python
     - shapely
+    - git+https://github.com/lettlini/core-data-utils.git
+    - ipykernel
