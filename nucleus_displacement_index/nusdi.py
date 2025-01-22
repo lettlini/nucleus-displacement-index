@@ -40,6 +40,11 @@ def calculate_nusdi_single_frame(
 
     assert len(cell_labels) == len(nucleus_labels)
 
+    if len(cell_labels) != len(nucleus_labels):
+        raise RuntimeError(
+            f"Number of cells ({len(cell_labels)}) and nuclei ({len(nucleus_labels)}) do not match."
+        )
+
     for current_cell_label in cell_labels:
         cell_selection_mask = cell_label_image == current_cell_label
         corresponding_nucleus = np.bincount(
@@ -107,8 +112,15 @@ def calculate_nusdi_single_cell(
         cv2.CHAIN_APPROX_NONE,
     )
 
-    assert len(cell_points) == 1
-    assert len(nucleus_points) == 1
+    if len(cell_points) != 1:
+        raise RuntimeError(
+            f"Found {len(cell_points)} cell contours, required exactly 1."
+        )
+
+    if len(nucleus_points) != 1:
+        raise RuntimeError(
+            f"Found {len(nucleus_points)} nucleus contours, required exactly 1."
+        )
 
     cell_points = cell_points[0].squeeze()
     cell_moments = cv2.moments(cell_points)
