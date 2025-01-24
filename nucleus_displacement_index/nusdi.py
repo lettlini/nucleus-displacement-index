@@ -47,13 +47,12 @@ def calculate_nusdi_single_frame(
 
     for current_cell_label in cell_labels:
         cell_selection_mask = cell_label_image == current_cell_label
-        corresponding_nucleus = np.bincount(
-            np.setdiff1d(nuclei_label_image[cell_selection_mask].flatten(), (0,))
-        ).argmax()
 
-        nucleus_selection_mask = np.logical_and(
-            cell_selection_mask, nuclei_label_image == corresponding_nucleus
-        )
+        corresponding_nucleus = np.setdiff1d(
+            nuclei_label_image[cell_selection_mask], (0,)
+        ).item()
+
+        nucleus_selection_mask = nuclei_label_image == corresponding_nucleus
 
         nusdi_dict[current_cell_label] = calculate_nusdi_single_cell(
             cell_selection_mask, nucleus_selection_mask, dilate=dilate
