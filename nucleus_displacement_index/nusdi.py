@@ -161,11 +161,14 @@ def calculate_nusdi_single_cell(
         cell_polygon, nucleus_polygon, bbox_w, bbox_h
     )
 
-    if len(distance_distribution) == 0:
-        return np.NaN
-
     return calculate_nusdi(distance_distribution, empirical_distance)
 
 
 def calculate_nusdi(distances: np.array, empirical_distance: float) -> float:
-    return empirical_distance / np.max(distances)
+
+    maximum_valid = max(np.max(distances), empirical_distance)
+
+    if maximum_valid == 0:
+        return 0
+
+    return empirical_distance / maximum_valid
