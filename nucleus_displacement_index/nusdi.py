@@ -166,6 +166,11 @@ def calculate_nusdi_single_cell(
 
 def calculate_nusdi(distances: np.array, empirical_distance: float) -> float:
 
+    if len(distances) == 0:
+        if empirical_distance > 0:
+            return 1
+        return 0
+
     maximum_valid = max(np.max(distances), empirical_distance)
 
     if maximum_valid == 0:
